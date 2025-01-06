@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Mockup Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2C2A3A;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        #master {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        #h3 {
+            font-size: 26px;
+            margin: 0;
+            color: #E5E5E5;
+        }
+
+        .container {
+            width: 900px;
+            background: linear-gradient(145deg, rgba(45, 45, 58, 0.9), rgba(30, 30, 42, 0.9));
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        #h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+            color: #F0F0F0;
+        }
+
+        #h2 {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #C0C0C0;
+        }
+
+        .highlight {
+            color: #FF7373;
+            margin: 10px 0;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        #inputtext {
+            width: 80%;
+            height: 100px;
+            border-radius: 12px;
+            font-size: 16px;
+            border: none;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            background-color: #3D3B52;
+            color: #fff;
+            transition: border 0.3s;
+        }
+
+        #inputtext:focus {
+            outline: none;
+            border: 1px solid #FF7373;
+        }
+
+        #convert-button {
+            background-color: #FF7373;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #convert-button:hover {
+            background-color: #E66464;
+            transform: scale(1.05);
+        }
+
+        #loading {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #mockup-output {
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        #mockup-output img {
+            max-width: 100%;
+            margin-top: 20px;
+            border-radius: 10px;
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        #mockup-output p {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #A3A3A3;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="header">
+        <img id="master" src="./master.Ai.jpg" alt="Master.AI Logo" loading="lazy">
+        <h3 id="h3">Master.AI</h3>
+    </div> -->
+    <div class="container">
+        <h1 id="h1">Generate Social Media Mockups with AI</h1>
+        <h2 id="h2">Create stunning social media post mockups in seconds.</h2>
+        <p class="highlight">Generate mockups for Instagram, Facebook, and TikTok.</p>
+        <textarea id="inputtext" placeholder="Enter your social media post..."></textarea>
+        <button id="convert-button">Generate Mockup</button>
+        <div id="loading">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="Loading" width="50">
+        </div>
+        <div id="mockup-output"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputText = document.getElementById('inputtext');
+            const convertButton = document.getElementById('convert-button');
+            const loading = document.getElementById('loading');
+            const mockupOutput = document.getElementById('mockup-output');
+
+            const createMockup = (text) => {
+                const mockupImg = document.createElement('img');
+                mockupImg.src = 'https://via.placeholder.com/640x360?text=Social+Media+Mockup';
+                mockupImg.alt = 'Social Media Mockup';
+                mockupImg.loading = 'lazy';
+                mockupImg.style.opacity = 0; // Set initial opacity for animation
+
+                const successMessage = document.createElement('p');
+                successMessage.textContent = 'Your AI-generated mockup is ready!';
+                successMessage.style.opacity = 0; // Set initial opacity for animation
+
+                // Append to output
+                mockupOutput.appendChild(mockupImg);
+                mockupOutput.appendChild(successMessage);
+
+                // Trigger animation after adding to DOM
+                setTimeout(() => {
+                    mockupImg.style.opacity = 1; // Fade in image
+                    successMessage.style.opacity = 1; // Fade in message
+                }, 100);
+            };
+
+            convertButton.addEventListener('click', () => {
+                const text = inputText.value.trim();
+                if (!text) {
+                    alert('Please enter your social media post content.');
+                    return;
+                }
+
+                loading.style.display = 'block';
+                convertButton.disabled = true;
+                mockupOutput.innerHTML = '';
+
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                    convertButton.disabled = false;
+                    createMockup(text);
+                }, 3000); // Simulating a 3-second mockup generation process
+            });
+        });
+    </script>
+</body>
+</html>

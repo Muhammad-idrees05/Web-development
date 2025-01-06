@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert to PDF</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2C2A3A;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        #master {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        #master:hover {
+            transform: scale(1.1);
+        }
+        h1 {
+            font-size: 56px;
+            text-align: center;
+            margin: 20px 0;
+            transition: transform 0.3s;
+        }
+        h1:hover {
+            transform: translateY(-5px);
+        }
+        #h2 {
+            text-align: center;
+            color: #6e6464;
+            margin-bottom: 20px;
+        }
+        .button {
+            position: relative;
+            display: block;
+            width: 220px;
+            margin: 20px auto;
+        }
+        .btn {
+            border: 2px solid transparent;
+            color: #fff;
+            background-color: #BF2525;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn:hover {
+            background-color: #E63939;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .button input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        #loading {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #FF7373;
+            text-align: center;
+        }
+        #spinner {
+            display: none;
+            border: 8px solid rgba(255, 255, 255, 0.2);
+            border-left-color: #FF7373;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #output {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #A3A3A3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Convert to PDF</h1>
+    <h2 id="h2">Convert various file formats to PDF with our easy-to-use tool.</h2>
+    <div class="button">
+        <button class="btn">Upload File</button>
+        <input type="file" name="file" accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.rtf,.jpg,.jpeg,.png,.gif" multiple onchange="handleFileUpload(this)">
+    </div>
+    <div id="loading">Converting to PDF, please wait...</div>
+    <div id="spinner"></div>
+    <div id="output"></div>
+
+    <script>
+        function handleFileUpload(input) {
+            const files = input.files;
+            if (files.length > 0) {
+                let fileNames = Array.from(files).map(file => file.name).join(', ');
+                alert(`You selected: ${fileNames}`);
+                
+                // Show loading message and spinner
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('spinner').style.display = 'block';
+                document.getElementById('output').innerHTML = ''; // Clear previous output
+
+                // Simulate a conversion process
+                setTimeout(() => {
+                    // Hide loading message and spinner after "conversion"
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('spinner').style.display = 'none';
+
+                    // Show output message or link
+                    const output = document.getElementById('output');
+                    output.innerHTML = `Conversion complete! <a href="#" style="color: #FF7373;">Download PDF</a>`;
+                }, 3000); // Simulated delay (3 seconds)
+            }
+        }
+    </script>
+</body>
+</html>

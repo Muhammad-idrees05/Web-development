@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Video</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #554957;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        #master {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        #h3 {
+            font-size: 26px;
+            margin: 0;
+        }
+        .container {
+            width: 1000px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 25px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        #h1 {
+            margin-bottom: 10px;
+        }
+        #h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #ddd;
+        }
+        .highlight {
+            color: rgb(177, 84, 84);
+            margin: 10px 0;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        #inputtext {
+            width: 80%;
+            height: 100px;
+            border-radius: 25px;
+            font-size: 18px;
+            border: none;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            resize: vertical;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        #convert-button {
+            background-color: rgb(177, 84, 84);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #convert-button:hover {
+            background-color: rgb(147, 54, 54);
+            transform: scale(1.05);
+            transition: transform 0.3s;
+        }
+        #loading, #video-output {
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="header">
+        <img id="master" src="./master.Ai.jpg" alt="Master.AI Logo">
+        <h3 id="h3">Master.AI</h3>
+    </div> -->
+    <div class="container">
+        <h1 id="h1">Convert Text to Video with AI</h1>
+        <h2 id="h2">The easiest way to turn text into video is here.</h2>
+        <p class="highlight">Create videos for YouTube, Instagram, and TikTok with simple text prompts.</p>
+        <p class="highlight">Just type in your idea to generate a video with stock footage, voiceover,</p>
+        <p class="highlight">background music, transitions, and more.</p>
+        <textarea id="inputtext" placeholder="Enter your script..."></textarea>
+        <button id="convert-button">Generate Video</button>
+        <div id="loading" style="display: none;">Converting your text to video...</div>
+        <div id="video-output"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const inputText = document.getElementById('inputtext');
+            const convertButton = document.getElementById('convert-button');
+            const loading = document.getElementById('loading');
+            const videoOutput = document.getElementById('video-output');
+
+            convertButton.addEventListener('click', () => {
+                const text = inputText.value.trim();
+                if (text === '') {
+                    alert('Please enter a script to convert.');
+                    return;
+                }
+
+                loading.style.display = 'block';
+                convertButton.disabled = true;
+                videoOutput.innerHTML = '';
+
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                    convertButton.disabled = false;
+                    loading.style.opacity = 1; // Ensure loading opacity is reset
+                    const video = document.createElement('video');
+                    video.src = 'https://www.w3schools.com/html/mov_bbb.mp4'; // Placeholder video
+                    video.controls = true;
+                    video.style.maxWidth = '100%';
+
+                    videoOutput.appendChild(video);
+                    videoOutput.innerHTML += '<p>Your AI-generated video is ready!</p>';
+                    videoOutput.style.opacity = 1; // Ensure output opacity is reset
+                }, 3000); // Simulating a 3-second conversion process
+            });
+        });
+    </script>
+</body>
+</html>
